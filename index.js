@@ -34,8 +34,14 @@ async function run() {
 
     const gardenerCollection = client.db('gardenerDB').collection('gardeners')
 
-    const trendingTips = client.db('planTipsDB').collection('tips')
-
+    const tipsCollection = client.db('planTipsDB').collection('tips')
+    
+    app.post('/tipsdata', async(req,res)=>{
+        const newTips = req.body;
+        console.log(newTips);
+        const result = await tipsCollection.insertOne(newTips);
+        res.send(result);
+    })
 
     app.get('/gardeners',async(req,res)=>{
 
@@ -45,8 +51,8 @@ async function run() {
     })
     app.get('/tips',async(req,res)=>{
 
-        const allTips = await trendingTips.find().limit(6).toArray();
-        res.send(allTips);
+        const trendingTips = await tipsCollection.find().limit(6).toArray();
+        res.send(trendingTips);
 
     })
 
