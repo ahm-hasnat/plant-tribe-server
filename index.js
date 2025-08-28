@@ -49,6 +49,12 @@ async function run() {
         res.send(activeGardeners);
 
     })
+    app.get('/allgardeners',async(req,res)=>{
+
+        const allGardeners = await gardenerCollection.find().toArray();
+        res.send(allGardeners);
+
+    })
 
     app.get('/publictips',async(req,res)=>{
 
