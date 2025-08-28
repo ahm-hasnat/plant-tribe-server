@@ -70,6 +70,23 @@ async function run() {
         res.send(allTips);
 
     })
+    app.get('/alltips/:id',async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id : new ObjectId(id)};
+        const result  = await tipsCollection.findOne(query);
+        res.send(result);
+    })
+    app.put('/alltips/:id',async(req,res)=>{
+        const id = req.params.id;
+         const filter = {_id : new ObjectId(id)};
+        const options = {upsert : true};
+        const updatedTip = req.body;
+        const updatedDoc = {
+            $set : updatedTip
+        }
+        const result  = await tipsCollection.updateOne(filter,updatedDoc,options);
+        res.send(result);
+    })
    
     app.delete('/alltips/:id',async(req,res)=>{
         const id = req.params.id;
