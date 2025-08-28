@@ -49,6 +49,15 @@ async function run() {
         res.send(activeGardeners);
 
     })
+
+    app.get('/publictips',async(req,res)=>{
+
+        const publicTips = await tipsCollection.find({availability:'Public'}).toArray();
+        res.send(publicTips);
+
+    })
+
+
     app.get('/tips',async(req,res)=>{
 
         const trendingTips = await tipsCollection.find().limit(6).toArray();
